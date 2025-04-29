@@ -1,0 +1,22 @@
+{
+  "posts": [
+    {
+      "title": "Tiêu đề bài viết 2",
+      "description": "Mô tả bài viết 2",
+      "content": "Nội dung bài viết 2",
+      "id": 2
+    },
+    {
+      "title": "Tiêu đề bài viết",
+      "description": "Mô tả bài viết",
+      "content": "Nội dung bài viết",
+      "id": 3
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "name": "Binh luan 1"
+    }
+  ]
+}
