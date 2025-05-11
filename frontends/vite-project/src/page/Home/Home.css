@@ -1,0 +1,157 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background: #f9f9f9;
+}
+
+.app {
+    max-width: 500px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.add-post,
+.filter-post {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.add-post {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+input[type="text"] {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+a:not(.link),
+button {
+    padding: 8px 12px;
+    border: none;
+    background: #2c7be5;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+
+    text-decoration: none;
+}
+
+a:not(.link):hover,
+button:hover {
+    background: #1a5dcc;
+}
+
+.post-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.post-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.post-list button {
+    background: #ff4d4f;
+}
+
+.post-list button:hover {
+    background: #d9363e;
+}
+
+#result-count {
+    text-align: center;
+    margin-top: 10px;
+    color: #555;
+    font-style: italic;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.comments {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.comments + .comments {
+    margin-top: 20px;
+}
+
+.link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+.comments {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+}
+.commentGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    width: 100vw;
+}
+
+.commentGroup + .commentGroup {
+    margin-top: 20px;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    span {
+        font-weight: 700;
+    }
+}
+.userName:hover {
+    color: red;
+    cursor: pointer;
+}
+
+.content {
+    p {
+        color: #4f4f4f;
+    }
+}
+
+hr {
+    width: 100vw;
+}
+
+.action {
+    display: flex;
+    gap: 16px;
+}

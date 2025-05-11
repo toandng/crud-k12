@@ -1,29 +1,26 @@
 const { body } = require("express-validator");
-const { readDb } = require("../utils/file.utils");
+const { readDb, writeDb } = require("../utils/file.utils");
+const { success } = require("../utils/response");
 
 const RESOURCE = "product";
 
+// Lấy danh sách sản phẩm
 const index = async (req, res) => {
   const products = await readDb(RESOURCE);
-  res.status(200).json({ status: "success", data: products });
+  return success(res, 200, products);
 };
 
+// Lấy chi tiết một sản phẩm
 const show = async (req, res) => {
   const products = await readDb(RESOURCE);
   const product = products.find((item) => item.id === Number(req.params.id));
 
-  if (!product) {
-    return res.status(404).json({
-      status: "error",
-      message: "Product not found",
-    });
-  }
-  res.status(200).json({
-    status: "success",
-    data: product,
-  });
+  if (!product) throwError(404);
+
+  return success(res, 200, products);
 };
 
+// Thêm mới sản phẩm
 const store = async (req, res) => {
   const products = await readDb(RESOURCE);
   const newId = (products[products.length - 1]?.id ?? 0) + 1;
@@ -33,48 +30,58 @@ const store = async (req, res) => {
     title: req.body.title,
     body: req.body.body,
   };
-  const newProducts = [...products, ...newProduct];
-  await writeDb(newProducts);
-  res.status(200).json({ status: "success", data: newProduct });
+
+  const newProducts = [...products, newProduct];
+  await writeDb(RESOURCE, newProducts);
+
+  return success(res, 200, products);
 };
 
+// Cập nhật sản phẩm
 const update = async (req, res) => {
   const products = await readDb(RESOURCE);
   const productIndex = products.findIndex(
     (item) => item.id === Number(req.params.id)
   );
+
   if (productIndex === -1) {
     return res.status(404).json({
       status: "error",
-      message: "Category not found",
+      message: "Không tìm thấy sản phẩm",
     });
   }
 
-  const updateProduct = [...products[productIndex], res.body];
+  const updatedProduct = {
+    ...products[productIndex],
+    ...req.body,
+  };
 
-  const updateProducts = [
+  const updatedProducts = [
     ...products.slice(0, productIndex),
-    updateProduct,
+    updatedProduct,
     ...products.slice(productIndex + 1),
   ];
-  await writeDb(RESOURCE, updateProducts);
-  res.status(200).json({ status: "success", data: products[updateProduct] });
+
+  await writeDb(RESOURCE, updatedProducts);
+
+  return success(res, 200, products);
 };
 
+// Xoá sản phẩm
 const destroy = async (req, res) => {
   const products = await readDb(RESOURCE);
   const productId = Number(req.params.id);
 
-  const updateProduct = products.filter((item) => item.id !== productId);
+  const filteredProducts = products.filter((item) => item.id !== productId);
 
-  if (updateProduct.length === products.length) {
+  if (filteredProducts.length === products.length) {
     return res.status(404).json({
       status: "error",
-      message: "Category not found",
+      message: "Không tìm thấy sản phẩm",
     });
   }
 
-  await writeResource(updateProduct);
+  await writeDb(RESOURCE, filteredProducts);
 
   res.status(204).send();
 };

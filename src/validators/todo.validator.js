@@ -11,10 +11,6 @@ exports.createTodValidator = [
       notEmpty: true,
       errorMessage: "Trường này không được để trống",
     },
-    price: {
-      notEmpty: true,
-      errorMessage: "Trường này không được để trống",
-    },
   }),
 ];
 
@@ -26,12 +22,6 @@ exports.updateTodoValidator = [
       errorMessage: "Trường này không được để trống",
     },
     description: {
-      optional: true,
-
-      notEmpty: true,
-      errorMessage: "Trường này không được để trống",
-    },
-    price: {
       optional: true,
 
       notEmpty: true,

@@ -1,7 +1,19 @@
 {
     "type": "commonjs",
     "dependencies": {
+        "cors": "^2.8.5",
         "express": "^5.1.0",
-        "express-validator": "^7.2.1"
+        "express-validator": "^7.2.1",
+        "module-alias": "^2.2.3",
+        "mysql2": "^3.14.1"
+    },
+    "scripts": {
+        "start": "nodemon ./server.js"
+    },
+    "_moduleAliases": {
+        "@": "src"
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.10"
     }
 }

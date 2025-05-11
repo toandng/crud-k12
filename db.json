@@ -1,22 +1,40 @@
 {
   "posts": [
     {
-      "title": "Tiêu đề bài viết 2",
-      "description": "Mô tả bài viết 2",
-      "content": "Nội dung bài viết 2",
-      "id": 2
-    },
-    {
-      "title": "Tiêu đề bài viết",
-      "description": "Mô tả bài viết",
-      "content": "Nội dung bài viết",
-      "id": 3
+      "id": 4,
+      "title": "ăn j k6"
     }
   ],
   "comments": [
     {
       "id": 1,
-      "name": "Binh luan 1"
+      "title": "hehe",
+      "postId": "3"
+    },
+    {
+      "id": 2,
+      "title": "hehe",
+      "postId": "3"
+    },
+    {
+      "id": 4,
+      "title": "hihi",
+      "postId": "3"
+    },
+    {
+      "id": 8
+    },
+    {
+      "id": 9,
+      "name": "Toán",
+      "comment": "nay ăn cái j đây lẩu thôi",
+      "postId": "1"
+    }
+  ],
+  " posts": [
+    {
+      "title": "mariaaa",
+      "id": 1
     }
   ]
 }

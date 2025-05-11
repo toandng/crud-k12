@@ -1,40 +1,41 @@
 const { checkSchema } = require("express-validator");
-const handlerValidationErrors = require("../validators/handlerErrors");
-exports.createPostValidator = [
+const handleValidationErrors = require("@/validators/handlerErrors");
+
+exports.createPost = [
   checkSchema({
     title: {
-      notEmpty: true,
       errorMessage: "Trường này không được để trống",
-    },
-    description: {
       notEmpty: true,
-      errorMessage: "Trường này không được để trống",
     },
-    content: {
-      notEmpty: true,
-      errorMessage: "Trường này không được để trống",
-    },
+    // description: {
+    //   errorMessage: "Trường này không được để trống",
+    //   notEmpty: true,
+    // },
+    // content: {
+    //   errorMessage: "Trường này không được để trống",
+    //   notEmpty: true,
+    // },
   }),
+  handleValidationErrors,
 ];
 
-exports.updatePosstValidator = [
+exports.updatePost = [
   checkSchema({
     title: {
       optional: true,
       notEmpty: true,
       errorMessage: "Trường này không được để trống",
     },
-    description: {
-      optional: true,
-
-      notEmpty: true,
-      errorMessage: "Trường này không được để trống",
-    },
-    content: {
-      optional: true,
-
-      notEmpty: true,
-      errorMessage: "Trường này không được để trống",
-    },
+    // description: {
+    //   optional: true,
+    //   notEmpty: true,
+    //   errorMessage: "Trường này không được để trống",
+    // },
+    // content: {
+    //   optional: true,
+    //   notEmpty: true,
+    //   errorMessage: "Trường này không được để trống",
+    // },
   }),
+  handleValidationErrors,
 ];

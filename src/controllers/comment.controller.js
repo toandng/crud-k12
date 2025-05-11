@@ -1,105 +1,52 @@
-const { readDb, writeDb } = require("../utils/file.utils");
+const { success } = require("@/utils/response");
+const { readDb, writeDb } = require("@/utils/file.utils");
+const commentService = require("@/services/comments.service");
+const throwError = require("@/utils/throwError");
+
 const RESOURCE = "comments";
 
 const index = async (req, res) => {
-  const comments = await readDb(RESOURCE);
-  res.json({
-    status: "success",
-    data: comments,
-  });
+  const comments = await commentService.getAllComments();
+
+  return success(res, 200, comments);
 };
 
 const show = async (req, res) => {
-  const comments = await readDb(RESOURCE);
-  const postId = parseInt(req.params.postId);
-  const postComments = comments.filter((c) => c.post_id === postId);
+  const comment = await commentService.getCommentById(req.params.id);
 
-  if (postComments.length === 0) {
-    return res.status(404).json({
-      status: "error",
-      message: "No comments found for this post.",
-    });
-  }
+  if (!comment) throwError(404);
 
-  res.json({
-    status: "success",
-    data: postComments,
-  });
+  return success(res, 200, comment);
 };
 
 const store = async (req, res) => {
-  const comments = await readDb(RESOURCE);
-  const { post_id, content } = req.body;
+  // const { title, body } = req.body;
+  // if (!title || !body) throwError(404);
 
-  if (!post_id || !content) {
-    return res.status(400).json({
-      status: "error",
-      message: "post_id and content are required.",
-    });
-  }
-
-  const newComment = {
-    id: comments.length > 0 ? comments[comments.length - 1].id + 1 : 1,
-    post_id,
-    content,
-  };
-
-  comments.push(newComment);
-  await writeDb(RESOURCE, comments);
-
-  res.status(201).json({
-    status: "success",
-    data: newComment,
-  });
+  const newComment = await commentService.createComment(req.body);
+  return success(res, 200, newComment);
 };
-
 const update = async (req, res) => {
-  const comments = await readDb(RESOURCE);
   const id = parseInt(req.params.id);
-  const { content } = req.body;
+  // const { content } = req.body;
 
-  const index = comments.findIndex((c) => c.id === id);
-  if (index === -1) {
-    return res.status(404).json({
-      status: "error",
-      message: "Comment not found.",
-    });
-  }
+  // if (!content) throwError(404, "thiếu trường");
+  const updated = await commentService.updateComment(id, req.body);
+  if (!updated) throwError(404);
 
-  if (!content) {
-    return res.status(400).json({
-      status: "error",
-      message: "Content is required.",
-    });
-  }
-
-  comments[index].content = content;
-  await writeDb(RESOURCE, comments);
-
-  res.json({
-    status: "success",
-    data: comments[index],
-  });
+  return success(res, 200, updated);
 };
 
 const destroy = async (req, res) => {
-  const comments = await readDb(RESOURCE);
   const id = parseInt(req.params.id);
-  const filtered = comments.filter((c) => c.id !== id);
+  const dele = await commentService.deleteComment(id);
+  // if (filtered.length === comments.length) throwError(404);
 
-  if (filtered.length === comments.length) {
-    return res.status(404).json({
-      status: "error",
-      message: "Comment not found.",
-    });
-  }
+  if (!dele) throwError(404, "not found");
 
-  await writeDb(RESOURCE, filtered);
+  // await writeDb(RESOURCE, filtered);
 
-  res.json({
-    status: "success",
-    message: `Comment ${id} deleted.`,
-  });
+  return success(res, 204);
 };
 
 module.exports = {

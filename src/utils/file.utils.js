@@ -1,7 +1,7 @@
 const fs = require("fs/promises");
 const path = require("path");
 
-const DB_PATH = path.join(__dirname, "../db.json");
+const DB_PATH = "./db.json";
 
 async function readDb(resource) {
   const data = await fs.readFile(DB_PATH, "utf-8");
