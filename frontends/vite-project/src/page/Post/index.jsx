@@ -156,7 +156,7 @@ function Post() {
     <>
       <div>
         <h1>{post.name}</h1>
-        <p>Đây là nội dung bài viết...</p>
+        <p>Tạo comment</p>
       </div>
 
       <div className="comments">
