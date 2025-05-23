@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="/assets/css/common.css" />
+    <link rel="stylesheet" href="/assets/css/main.css" />
+    <link rel="stylesheet" href="/assets/css/dashboard.css" />
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <%- include("../partials/sidebar") %>
+
+        <!-- Main Content -->
+        <main><%- body %></main>
+
+        <!-- Scripts -->
+        <!-- COMMON FIRST -->
+        <script src="/assets/js/common.js"></script>
+        <script src="/assets/js/validation.js"></script>
+
+        <!-- MODULE SCRIPTS -->
+        <script src="/assets/js/dashboard.js"></script>
+        <script src="/assets/js/account.js"></script>
+        <script src="/assets/js/comments.js"></script>
+        <script src="/assets/js/products.js"></script>
+        <script src="/assets/js/topics.js"></script>
+        <script src="/assets/js/users.js"></script>
+        <script src="/assets/js/setting.js"></script>
+        <script src="/assets/js/analytics.js"></script>
+        <script src="/assets/js/categories.js"></script>
+        <script src="/assets/js/sidebar.js"></script>
+
+</body>
+
+</html>

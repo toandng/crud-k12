@@ -1,14 +1,33 @@
 const { readDb, writeDb } = require("@/utils/file.utils");
-const RESOURCE = " posts";
+const postModel = require("@/models/post.model");
 
-const getAllPosts = async () => {
-  const posts = await readDb(RESOURCE);
-  return posts;
+// const RESOURCE = " posts";
+
+const getAllPosts = async (page = 1, limit) => {
+  const currentPage = Math.max(1, parseInt(page) || 1);
+  const count = await postModel.count();
+
+  const rows = await postModel.findAllPosts(page);
+  const lastPage = Math.ceil(count / 10);
+
+  console.log(count);
+
+  const result = {
+    items: rows,
+    pagigation: {
+      current_page: currentPage,
+      per_page: limit,
+      total: count,
+      last_page: lastPage,
+    },
+  };
+
+  return result;
 };
 
 const getPostById = async (id) => {
-  const posts = await readDb(RESOURCE);
-  return posts.find((post) => post.id === +id);
+  const post = await postModel.findById(id);
+  return post;
 };
 
 const createPost = async (data) => {

@@ -1,4 +1,4 @@
-const { index } = require("@/controllers/post.controller");
+const { index } = require("@/controllers/api/post.controller");
 const { readDb, writeDb } = require("@/utils/file.utils");
 const { body } = require("express-validator");
 const RESOURCE = "comments";

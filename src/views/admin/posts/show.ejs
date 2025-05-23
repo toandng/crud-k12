@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Detail | Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="/assets/css/main.css" />
+    <link rel="stylesheet" href="/assets/css/dashboard.css" />
+    <link rel="stylesheet" href="/assets/css/products.css" />
+</head>
+
+<body>
+    <!-- Sidebar -->
+ 
+
+    <!-- Main Content -->
+    <main>
+        <!-- Product Header -->
+        <div class="product-detail-header">
+            <h1>Product Detail</h1>
+            <div class="header-buttons">
+                <a href="#" class="btn-primary">
+                    <i class="fas fa-edit"></i> Edit
+                </a>
+                <a href="products.html" class="btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Back
+                </a>
+            </div>
+        </div>
+
+        <!-- Product Information -->
+        <div class="product-detail-card">
+            <div class="product-info">
+                <div class="product-image-container">
+                    <img src="https://via.placeholder.com/300"  alt="Product" class="product-detail-image" />
+                </div>
+                <div class="product-detail-info">
+                    <h2>ID: <%= post.Id %></h2>
+                    <div class="product-detail-category">
+                        
+                        <%= post.title %>
+                    </div>
+                    <h2>Description</h2>
+                    <div class="product-detail-price"><%= post.description %></div>
+
+                    
+
+                  
+                    <div class="info-row">
+                        <div class="info-label">Created Date</div>
+                        <div class="info-value"><%= post.create_at %></div>
+                    </div>
+
+                    <div class="info-row">
+                        <div class="info-label">Last Updated</div>
+                        <div class="info-value"><%= post.update_at %></div>
+                    </div>
+
+                 
+                </div>
+            </div>
+
+          
+
+            <!-- Product Footer Actions -->
+            <div class="product-footer">
+                <div class="footer-left">
+                    <a href="/admin/posts" class="btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to Products
+                    </a>
+                </div>
+                <div class="footer-right">
+                    <a href="#" class="btn-primary">
+                        <i class="fas fa-edit"></i> Edit Product
+                    </a>
+                    <a href="#" class="btn-danger delete-product" data-id="1" data-name="Wireless Headphones">
+                        <i class="fas fa-trash"></i> Delete
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal" id="confirmDeleteModal">
+        <div class="modal-content">
+            <h3 class="modal-title">Confirm Delete</h3>
+            <div class="modal-body">
+                Are you sure you want to delete "<span id="deleteProductName"></span>"? This action cannot be undone.
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="cancelDelete" class="btn-secondary">
+                    Cancel
+                </button>
+                <button type="button" id="confirmDelete" class="btn-danger">
+                    Delete
+                </button>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

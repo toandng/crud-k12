@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Comments | Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  
+
+</head>
+
+<body>
+    <div class="app-container">
+
+        <!-- Main Content -->
+        <main class="content-wrapper">
+            <div class="content-header">
+                <h1>Comments</h1>
+                <div>
+                    <button id="bulkApproveBtn" class="btn btn-success" style="margin-right: 10px">
+                        <i class="fas fa-check"></i> Approve Selected
+                    </button>
+                    <button id="bulkRejectBtn" class="btn btn-danger">
+                        <i class="fas fa-ban"></i> Reject Selected
+                    </button>
+                </div>
+            </div>
+
+            <!-- Filter Bar -->
+            <div class="filter-bar">
+                <form id="filterForm" class="filter-form" novalidate>
+                    <div class="form-group">
+                        <label for="filterText">Search</label>
+                        <input type="text" id="filterText" class="form-control" placeholder="Search comments..." />
+                        <span class="error-text" id="filterTextError">Please enter valid search text.</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="filterPost">Post</label>
+                        <select id="filterPost" class="form-control">
+                            <option value="">All Posts</option>
+                            <option value="1">
+                                10 Tips for Better Productivity
+                            </option>
+                            <option value="2">
+                                The Future of AI in Business
+                            </option>
+                            <option value="3">
+                                5 Morning Habits of Successful People
+                            </option>
+                            <option value="4">
+                                How to Build a Successful E-commerce
+                                Business
+                            </option>
+                            <option value="5">
+                                The Complete Guide to Digital Marketing
+                            </option>
+                            <option value="6">
+                                The Rise of Remote Work
+                            </option>
+                        </select>
+                        <span class="error-text" id="filterPostError">Please select a valid post.</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="filterStatus">Status</label>
+                        <select id="filterStatus" class="form-control">
+                            <option value="">All Statuses</option>
+                            <option value="approved">Approved</option>
+                            <option value="pending">Pending</option>
+                            <option value="rejected">Rejected</option>
+                        </select>
+                        <span class="error-text" id="filterStatusError">Please select a valid status.</span>
+                    </div>
+
+                    <div class="form-group filter-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-filter"></i> Filter
+                        </button>
+                        <button type="button" id="resetFilters" class="btn btn-secondary" style="margin-left: 10px">
+                            <i class="fas fa-times"></i> Reset
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Data Table -->
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 40px">
+                                <input type="checkbox" id="selectAll" />
+                            </th>
+                            <th>Comment</th>
+                            <th>Author</th>
+                            <th>Post</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Comment rows -->
+                        <tr data-id="1">
+                            <td>
+                                <input type="checkbox" class="comment-checkbox" />
+                            </td>
+                            <td>
+                                <div style="
+                                            display: flex;
+                                            flex-direction: column;
+                                        ">
+                                    <div class="item-title">
+                                        Great article! These tips have
+                                        really helped me improve my
+                                        productivity.
+                                    </div>
+                                    <div class="item-subtitle" style="margin-top: 5px">
+                                        <a href="post-detail.html?id=1">View Post</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Sarah Johnson</td>
+                            <td>10 Tips for Better Productivity</td>
+                            <td>Jul 16, 2023</td>
+                            <td>
+                                <span class="badge badge-success">Approved</span>
+                            </td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="comment-detail.html?id=1" class="action-btn view" title="View">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="edit-comment.html?id=1" class="action-btn edit" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="#" class="action-btn delete delete-item" title="Delete" data-id="1"
+                                        data-name="Comment from Sarah Johnson">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr data-id="2">
+                            <td>
+                                <input type="checkbox" class="comment-checkbox" />
+                            </td>
+                            <td>
+                                <div style="
+                                            display: flex;
+                                            flex-direction: column;
+                                        ">
+                                    <div class="item-title">
+                                        I disagree with point #3. In my
+                                        experience, starting with the most
+                                        difficult task first is more
+                                        effective.
+                                    </div>
+                                    <div class="item-subtitle" style="margin-top: 5px">
+                                        <a href="post-detail.html?id=1">View Post</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Michael Brown</td>
+                            <td>10 Tips for Better Productivity</td>
+                            <td>Jul 17, 2023</td>
+                            <td>
+                                <span class="badge badge-success">Approved</span>
+                            </td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="comment-detail.html?id=2" class="action-btn view" title="View">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="edit-comment.html?id=2" class="action-btn edit" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="#" class="action-btn delete delete-item" title="Delete" data-id="2"
+                                        data-name="Comment from Michael Brown">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr data-id="3">
+                            <td>
+                                <input type="checkbox" class="comment-checkbox" />
+                            </td>
+                            <td>
+                                <div style="
+                                            display: flex;
+                                            flex-direction: column;
+                                        ">
+                                    <div class="item-title">
+                                        The AI revolution is already here.
+                                        Companies need to adapt quickly or
+                                        get left behind.
+                                    </div>
+                                    <div class="item-subtitle" style="margin-top: 5px">
+                                        <a href="post-detail.html?id=2">View Post</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>David Wilson</td>
+                            <td>The Future of AI in Business</td>
+                            <td>Jul 12, 2023</td>
+                            <td>
+                                <span class="badge badge-success">Approved</span>
+                            </td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="comment-detail.html?id=3" class="action-btn view" title="View">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="edit-comment.html?id=3" class="action-btn edit" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="#" class="action-btn delete delete-item" title="Delete" data-id="3"
+                                        data-name="Comment from David Wilson">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr data-id="4">
+                            <td>
+                                <input type="checkbox" class="comment-checkbox" />
+                            </td>
+                            <td>
+                                <div style="
+                                            display: flex;
+                                            flex-direction: column;
+                                        ">
+                                    <div class="item-title">
+                                        Check out my website at
+                                        http://spamlink.com for more
+                                        productivity hacks!
+                                    </div>
+                                    <div class="item-subtitle" style="margin-top: 5px">
+                                        <a href="post-detail.html?id=1">View Post</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Unknown User</td>
+                            <td>10 Tips for Better Productivity</td>
+                            <td>Jul 18, 2023</td>
+                            <td>
+                                <span class="badge badge-danger">Rejected</span>
+                            </td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="comment-detail.html?id=4" class="action-btn view" title="View">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="edit-comment.html?id=4" class="action-btn edit" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="#" class="action-btn delete delete-item" title="Delete" data-id="4"
+                                        data-name="Comment from Unknown User">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr data-id="5">
+                            <td>
+                                <input type="checkbox" class="comment-checkbox" />
+                            </td>
+                            <td>
+                                <div style="
+                                            display: flex;
+                                            flex-direction: column;
+                                        ">
+                                    <div class="item-title">
+                                        Morning meditation has changed my
+                                        life. I'd add that to the list of
+                                        habits.
+                                    </div>
+                                    <div class="item-subtitle" style="margin-top: 5px">
+                                        <a href="post-detail.html?id=3">View Post</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Jennifer Lopez</td>
+                            <td>5 Morning Habits of Successful People</td>
+                            <td>Jul 18, 2023</td>
+                            <td>
+                                <span class="badge badge-warning">Pending</span>
+                            </td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="comment-detail.html?id=5" class="action-btn view" title="View">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="edit-comment.html?id=5" class="action-btn edit" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="#" class="action-btn delete delete-item" title="Delete" data-id="5"
+                                        data-name="Comment from Jennifer Lopez">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr data-id="6">
+                            <td>
+                                <input type="checkbox" class="comment-checkbox" />
+                            </td>
+                            <td>
+                                <div style="
+                                            display: flex;
+                                            flex-direction: column;
+                                        ">
+                                    <div class="item-title">
+                                        Remote work has been a game-changer.
+                                        No more commuting and better
+                                        work-life balance!
+                                    </div>
+                                    <div class="item-subtitle" style="margin-top: 5px">
+                                        <a href="post-detail.html?id=6">View Post</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Robert Taylor</td>
+                            <td>The Rise of Remote Work</td>
+                            <td>Jul 19, 2023</td>
+                            <td>
+                                <span class="badge badge-warning">Pending</span>
+                            </td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="comment-detail.html?id=6" class="action-btn view" title="View">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="edit-comment.html?id=6" class="action-btn edit" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="#" class="action-btn delete delete-item" title="Delete" data-id="6"
+                                        data-name="Comment from Robert Taylor">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Pagination -->
+                <div class="pagination-container">
+                    <div class="pagination-info">
+                        Showing 1-6 of 24 comments
+                    </div>
+                    <ul class="pagination">
+                        <li class="active">
+                            <a href="#" data-page="1">1</a>
+                        </li>
+                        <li><a href="#" data-page="2">2</a></li>
+                        <li><a href="#" data-page="3">3</a></li>
+                        <li><a href="#" data-page="4">4</a></li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Confirm Dialog -->
+    <div class="modal" id="confirmDeleteModal">
+        <div class="modal-content">
+            <h3 class="modal-title">Confirm Delete</h3>
+            <div class="modal-body">
+                Are you sure you want to delete "<span id="deleteItemName"></span>"? This action cannot be undone.
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="cancelDelete" class="btn btn-secondary" data-cancel>
+                    Cancel
+                </button>
+                <button type="button" id="confirmDelete" class="btn btn-danger" data-confirm>
+                    Delete
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+
+    
+</body>
+
+</html>

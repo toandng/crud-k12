@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Users | Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="assets/css/common.css" />
+
+</head>
+
+<body>
+    <div class="app-container">
+       
+
+        <!-- Main Content -->
+        <main class="content-wrapper">
+            <div class="content-header">
+                <h1>Users</h1>
+                <a href="create-user.html" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Add New
+                </a>
+            </div>
+
+            <!-- Filter Bar -->
+            <div class="filter-bar">
+                <form id="filterForm" class="filter-form" novalidate>
+                    <div class="form-group">
+                        <label for="filterName">Username</label>
+                        <input type="text" id="filterName" class="form-control" placeholder="Search users..." />
+                        <span class="error-text" id="filterNameError">Please enter a valid username.</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="filterRole">Role</label>
+                        <select id="filterRole" class="form-control">
+                            <option value="">All Roles</option>
+                            <option value="admin">Administrator</option>
+                            <option value="editor">Editor</option>
+                            <option value="viewer">Viewer</option>
+                        </select>
+                        <span class="error-text" id="filterRoleError">Please select a valid role.</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="filterStatus">Status</label>
+                        <select id="filterStatus" class="form-control">
+                            <option value="">All Statuses</option>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                            <option value="pending">Pending</option>
+                        </select>
+                        <span class="error-text" id="filterStatusError">Please select a valid status.</span>
+                    </div>
+
+                    <div class="form-group filter-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-filter"></i> Filter
+                        </button>
+                        <button type="button" id="resetFilters" class="btn btn-secondary" style="margin-left: 10px">
+                            <i class="fas fa-times"></i> Reset
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Data Table -->
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Last Login</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- User rows -->
+                        <tr data-id="1">
+                            <td>
+                                <div style="
+                                            display: flex;
+                                            align-items: center;
+                                        ">
+                                    <div class="avatar">JD</div>
+                                    <div style="margin-left: 15px">
+                                        <div class="item-title">
+                                            John Doe
+                                        </div>
+                                        <div class="item-subtitle">
+                                            @johndoe
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>john.doe@example.com</td>
+                            <td>Administrator</td>
+                            <td>Today, 09:45 AM</td>
+                            <td>
+                                <span class="badge badge-success">Active</span>
+                            </td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="user-detail.html?id=1" class="action-btn view" title="View">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="edit-user.html?id=1" class="action-btn edit" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="#" class="action-btn delete delete-item" title="Delete" data-id="1"
+                                        data-name="John Doe">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr data-id="2">
+                            <td>
+                                <div style="
+                                            display: flex;
+                                            align-items: center;
+                                        ">
+                                    <div class="avatar">JS</div>
+                                    <div style="margin-left: 15px">
+                                        <div class="item-title">
+                                            Jane Smith
+                                        </div>
+                                        <div class="item-subtitle">
+                                            @janesmith
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>jane.smith@example.com</td>
+                            <td>Editor</td>
+                            <td>Yesterday, 14:22 PM</td>
+                            <td>
+                                <span class="badge badge-success">Active</span>
+                            </td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="user-detail.html?id=2" class="action-btn view" title="View">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="edit-user.html?id=2" class="action-btn edit" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="#" class="action-btn delete delete-item" title="Delete" data-id="2"
+                                        data-name="Jane Smith">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr data-id="3">
+                            <td>
+                                <div style="
+                                            display: flex;
+                                            align-items: center;
+                                        ">
+                                    <div class="avatar">RJ</div>
+                                    <div style="margin-left: 15px">
+                                        <div class="item-title">
+                                            Robert Johnson
+                                        </div>
+                                        <div class="item-subtitle">
+                                            @robertj
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>robert.j@example.com</td>
+                            <td>Editor</td>
+                            <td>2 days ago</td>
+                            <td>
+                                <span class="badge badge-warning">Pending</span>
+                            </td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="user-detail.html?id=3" class="action-btn view" title="View">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="edit-user.html?id=3" class="action-btn edit" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="#" class="action-btn delete delete-item" title="Delete" data-id="3"
+                                        data-name="Robert Johnson">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr data-id="4">
+                            <td>
+                                <div style="
+                                            display: flex;
+                                            align-items: center;
+                                        ">
+                                    <div class="avatar">EB</div>
+                                    <div style="margin-left: 15px">
+                                        <div class="item-title">
+                                            Emily Brown
+                                        </div>
+                                        <div class="item-subtitle">
+                                            @emilybrown
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>emily.brown@example.com</td>
+                            <td>Viewer</td>
+                            <td>Never</td>
+                            <td>
+                                <span class="badge badge-danger">Inactive</span>
+                            </td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="user-detail.html?id=4" class="action-btn view" title="View">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="edit-user.html?id=4" class="action-btn edit" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="#" class="action-btn delete delete-item" title="Delete" data-id="4"
+                                        data-name="Emily Brown">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr data-id="5">
+                            <td>
+                                <div style="
+                                            display: flex;
+                                            align-items: center;
+                                        ">
+                                    <div class="avatar">MT</div>
+                                    <div style="margin-left: 15px">
+                                        <div class="item-title">
+                                            Michael Taylor
+                                        </div>
+                                        <div class="item-subtitle">
+                                            @michaelt
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>michael.t@example.com</td>
+                            <td>Administrator</td>
+                            <td>Today, 10:12 AM</td>
+                            <td>
+                                <span class="badge badge-success">Active</span>
+                            </td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="user-detail.html?id=5" class="action-btn view" title="View">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="edit-user.html?id=5" class="action-btn edit" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="#" class="action-btn delete delete-item" title="Delete" data-id="5"
+                                        data-name="Michael Taylor">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr data-id="6">
+                            <td>
+                                <div style="
+                                            display: flex;
+                                            align-items: center;
+                                        ">
+                                    <div class="avatar">SL</div>
+                                    <div style="margin-left: 15px">
+                                        <div class="item-title">
+                                            Sarah Lee
+                                        </div>
+                                        <div class="item-subtitle">
+                                            @sarahlee
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>sarah.lee@example.com</td>
+                            <td>Viewer</td>
+                            <td>1 week ago</td>
+                            <td>
+                                <span class="badge badge-success">Active</span>
+                            </td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="user-detail.html?id=6" class="action-btn view" title="View">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="edit-user.html?id=6" class="action-btn edit" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="#" class="action-btn delete delete-item" title="Delete" data-id="6"
+                                        data-name="Sarah Lee">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Pagination -->
+                <div class="pagination-container">
+                    <div class="pagination-info">
+                        Showing 1-6 of 42 users
+                    </div>
+                    <ul class="pagination">
+                        <li class="active">
+                            <a href="#" data-page="1">1</a>
+                        </li>
+                        <li><a href="#" data-page="2">2</a></li>
+                        <li><a href="#" data-page="3">3</a></li>
+                        <li><a href="#" data-page="4">4</a></li>
+                        <li><a href="#" data-page="5">5</a></li>
+                        <li><a href="#" data-page="6">6</a></li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Confirm Dialog -->
+    <div class="modal" id="confirmDeleteModal">
+        <div class="modal-content">
+            <h3 class="modal-title">Confirm Delete</h3>
+            <div class="modal-body">
+                Are you sure you want to delete user "<span id="deleteItemName"></span>"? This action cannot be undone.
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="cancelDelete" class="btn btn-secondary" data-cancel>
+                    Cancel
+                </button>
+                <button type="button" id="confirmDelete" class="btn btn-danger" data-confirm>
+                    Delete
+                </button>
+            </div>
+        </div>
+    </div>
+
+   
+</body>
+
+</html>
