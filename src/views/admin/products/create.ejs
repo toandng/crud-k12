@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Product | Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="assets/css/common.css" />
+
+    <style>
+        .error-text {
+            color: #f44336;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .form-control.error {
+            border-color: #f44336;
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+        }
+
+        .form-section h3 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .image-upload {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 200px;
+            background-color: #f8f9fa;
+            border: 2px dashed #dfe3e8;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .image-upload:hover {
+            background-color: #eaedef;
+        }
+
+        .image-upload input {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .image-upload .upload-icon {
+            font-size: 40px;
+            color: #aaa;
+        }
+
+        .image-upload .upload-text {
+            font-size: 14px;
+            color: #666;
+            margin-top: 10px;
+        }
+
+        .image-preview {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+            display: none;
+        }
+
+        .spec-row {
+            display: flex;
+            margin-bottom: 15px;
+            gap: 15px;
+        }
+
+        .spec-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        .spec-row .remove-spec {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            color: #f44336;
+            background-color: rgba(244, 67, 54, 0.1);
+            border: 1px solid rgba(244, 67, 54, 0.2);
+            border-radius: 8px;
+            cursor: pointer;
+            align-self: flex-end;
+            margin-bottom: 5px;
+        }
+
+        .add-spec-btn {
+            display: inline-flex;
+            align-items: center;
+            background-color: #f8f9fa;
+            color: #555;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .add-spec-btn i {
+            margin-right: 5px;
+        }
+
+        .form-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+
+        .form-buttons .btn-secondary {
+            margin-right: 10px;
+        }
+
+        /* Success message */
+        .success-message {
+            display: none;
+            padding: 20px;
+            background-color: rgba(76, 175, 80, 0.1);
+            border: 1px solid rgba(76, 175, 80, 0.2);
+            color: #4caf50;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .success-message i {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+       
+
+        <!-- Main Content -->
+        <main class="content-wrapper">
+            <div class="content-header">
+                <h1>Create Product</h1>
+                <a href="products.html" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Back to Products
+                </a>
+            </div>
+
+            <div id="successMessage" class="message message-success" style="display: none">
+                <i class="fas fa-check-circle"></i>
+                <span data-message-text>Product has been created successfully!</span>
+            </div>
+
+            <!-- Create Product Form -->
+            <div class="card">
+                <div class="card-header">
+                    <h3>Product Information</h3>
+                </div>
+                <div class="card-body">
+                    <form id="createProductForm" novalidate>
+                        <!-- Basic Information Section -->
+                        <div class="form-section">
+                            <h3>Basic Information</h3>
+
+                            <div class="form-group">
+                                <label for="productName">Product Name*</label>
+                                <input type="text" id="productName" class="form-control"
+                                    placeholder="Enter product name" required />
+                                <span class="error-text" id="productNameError">Please enter a product name.</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="productCategory">Category*</label>
+                                <select id="productCategory" class="form-control" required>
+                                    <option value="">
+                                        Select a category
+                                    </option>
+                                    <option value="electronics">
+                                        Electronics
+                                    </option>
+                                    <option value="clothing">
+                                        Clothing
+                                    </option>
+                                    <option value="food">Food</option>
+                                    <option value="books">Books</option>
+                                </select>
+                                <span class="error-text" id="productCategoryError">Please select a category.</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="productDescription">Description*</label>
+                                <textarea id="productDescription" class="form-control" rows="4"
+                                    placeholder="Enter product description" required></textarea>
+                                <span class="error-text" id="productDescriptionError">Please enter a product
+                                    description.</span>
+                            </div>
+                        </div>
+
+                        <!-- Pricing and Inventory Section -->
+                        <div class="form-section">
+                            <h3>Pricing & Inventory</h3>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="productPrice">Price ($)*</label>
+                                    <input type="text" id="productPrice" class="form-control" placeholder="0.00"
+                                        data-validate="numeric" required />
+                                    <span class="error-text" id="productPriceError">Please enter a valid price.</span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="productDiscount">Discount (%)</label>
+                                    <input type="text" id="productDiscount" class="form-control" placeholder="0"
+                                        data-validate="numeric" />
+                                    <span class="error-text" id="productDiscountError">Please enter a valid discount
+                                        percentage.</span>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="productStock">Stock Quantity*</label>
+                                    <input type="text" id="productStock" class="form-control" placeholder="0"
+                                        data-validate="numeric" required />
+                                    <span class="error-text" id="productStockError">Please enter a valid stock
+                                        quantity.</span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="productSku">SKU Code*</label>
+                                    <input type="text" id="productSku" class="form-control" placeholder="SKU-12345"
+                                        required />
+                                    <span class="error-text" id="productSkuError">Please enter a SKU code.</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="productStatus">Status*</label>
+                                <select id="productStatus" class="form-control" required>
+                                    <option value="">Select status</option>
+                                    <option value="in_stock">
+                                        In Stock
+                                    </option>
+                                    <option value="low_stock">
+                                        Low Stock
+                                    </option>
+                                    <option value="out_of_stock">
+                                        Out of Stock
+                                    </option>
+                                </select>
+                                <span class="error-text" id="productStatusError">Please select a status.</span>
+                            </div>
+                        </div>
+
+                        <!-- Product Image Section -->
+                        <div class="form-section">
+                            <h3>Product Image</h3>
+
+                            <div class="media-upload" id="productImageUpload">
+                                <input type="file" id="productImage" name="productImage" accept="image/*" />
+                                <div class="upload-content">
+                                    <div class="upload-icon">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                    </div>
+                                    <div class="upload-text">
+                                        Drag & drop image or click to browse
+                                    </div>
+                                </div>
+                                <img id="productImagePreview" class="media-preview" />
+                            </div>
+                            <span class="error-text" id="productImageError">Please upload a product image.</span>
+                        </div>
+
+                        <!-- Specifications Section -->
+                        <div class="form-section">
+                            <h3>Specifications</h3>
+
+                            <div id="specificationsList">
+                                <!-- Specification rows will be added here -->
+                                <div class="spec-row">
+                                    <div class="form-group">
+                                        <label for="specName1">Specification Name</label>
+                                        <input type="text" id="specName1" class="form-control spec-name"
+                                            placeholder="e.g. Weight" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="specValue1">Specification Value</label>
+                                        <input type="text" id="specValue1" class="form-control spec-value"
+                                            placeholder="e.g. 2.5 kg" />
+                                    </div>
+
+                                    <button type="button" class="remove-spec">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <button type="button" id="addSpecBtn" class="add-spec-btn">
+                                <i class="fas fa-plus"></i> Add
+                                Specification
+                            </button>
+                        </div>
+
+                        <!-- Form Buttons -->
+                        <div class="form-buttons">
+                            <button type="button" id="cancelBtn" class="btn btn-secondary">
+                                Cancel
+                            </button>
+                            <div>
+                                <button type="button" id="saveAsDraftBtn" class="btn btn-secondary">
+                                    Save as Draft
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save"></i> Create
+                                    Product
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="assets/js/common.js"></script>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Initialize form validation
+            initFormValidation("createProductForm");
+
+            // Setup file upload
+            setupFileUpload(
+                "productImage",
+                "productImagePreview",
+                "productImageUpload"
+            );
+
+            // Handle adding specifications
+            let specCount = 1;
+            const specsList = document.getElementById("specificationsList");
+            const addSpecBtn = document.getElementById("addSpecBtn");
+
+            addSpecBtn.addEventListener("click", function () {
+                specCount++;
+                const newSpecRow = document.createElement("div");
+                newSpecRow.className = "spec-row";
+                newSpecRow.innerHTML = `
+                    <div class="form-group">
+                        <label for="specName${specCount}">Specification Name</label>
+                        <input type="text" id="specName${specCount}" class="form-control spec-name" placeholder="e.g. Weight">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="specValue${specCount}">Specification Value</label>
+                        <input type="text" id="specValue${specCount}" class="form-control spec-value" placeholder="e.g. 2.5 kg">
+                    </div>
+                    
+                    <button type="button" class="remove-spec">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                specsList.appendChild(newSpecRow);
+
+                // Add event listener to the new remove button
+                const removeBtn = newSpecRow.querySelector(".remove-spec");
+                removeBtn.addEventListener("click", function () {
+                    specsList.removeChild(newSpecRow);
+                });
+            });
+
+            // Initial spec row remove button
+            document
+                .querySelector(".remove-spec")
+                .addEventListener("click", function () {
+                    const firstSpecRow = this.closest(".spec-row");
+                    // Don't remove if it's the last one, just clear the values
+                    if (specsList.children.length === 1) {
+                        firstSpecRow
+                            .querySelectorAll("input")
+                            .forEach((input) => (input.value = ""));
+                    } else {
+                        specsList.removeChild(firstSpecRow);
+                    }
+                });
+
+            // Numeric input validation (for price fields)
+            const numericInputs = document.querySelectorAll(
+                '[data-validate="numeric"]'
+            );
+            numericInputs.forEach((input) => {
+                input.addEventListener("input", function (e) {
+                    // Allow only numbers and decimal point
+                    this.value = this.value.replace(/[^0-9.]/g, "");
+
+                    // Ensure only one decimal point
+                    const decimalCount = (this.value.match(/\./g) || [])
+                        .length;
+                    if (decimalCount > 1) {
+                        this.value = this.value.replace(/\.(?=.*\.)/g, "");
+                    }
+                });
+            });
+
+            // Handle Cancel Button
+            document
+                .getElementById("cancelBtn")
+                .addEventListener("click", function () {
+                    if (
+                        confirm(
+                            "Are you sure you want to cancel? All changes will be lost."
+                        )
+                    ) {
+                        window.location.href = "products.html";
+                    }
+                });
+
+            // Handle Save as Draft Button
+            document
+                .getElementById("saveAsDraftBtn")
+                .addEventListener("click", function () {
+                    showMessage(
+                        "successMessage",
+                        "Product saved as draft.",
+                        3000
+                    );
+                });
+
+            // Handle form submission
+            document
+                .getElementById("createProductForm")
+                .addEventListener("submit", function (event) {
+                    event.preventDefault();
+
+                    if (validateForm("createProductForm")) {
+                        // Show success message
+                        showMessage(
+                            "successMessage",
+                            "Product has been created successfully.",
+                            3000
+                        );
+
+                        // Redirect to products page after a delay
+                        setTimeout(function () {
+                            window.location.href = "products.html";
+                        }, 2000);
+                    }
+                });
+        });
+    </script>
+</body>
+
+</html>

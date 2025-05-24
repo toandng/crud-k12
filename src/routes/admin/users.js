@@ -1,8 +1,10 @@
 const express = require("express");
-const categoriesController = require("@/controllers/admin/categories.controller");
+const userController = require("@/controllers/admin/users.controller");
 const router = express.Router();
 
-router.get("/", categoriesController.index);
-router.get("/:id", categoriesController.show);
+router.get("/", userController.index);
+router.get("/create", userController.create);
+
+router.get("/:id", userController.show);
 
 module.exports = router;

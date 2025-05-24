@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const userInfo = document.getElementById("userInfo");
+  const userInfo = document.querySelector(".user-profile");
   const userDropdown = document.getElementById("userDropdown");
 
   // Toggle dropdown when clicking on user info

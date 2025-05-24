@@ -12,13 +12,12 @@ exports.index = async (req, res) => {
   });
 };
 exports.show = async (req, res) => {
-  const id = req.params.id;
-  const post = await postsService.getPostById(id);
+  res.render("admin/products/productsDetail");
+};
 
-  if (!post) throwError(404);
-
-  res.render("admin/products/show", {
-    title: post.title,
-    post,
-  });
+exports.edit = async (req, res) => {
+  res.render("admin/products/editProduct");
+};
+exports.create = async (req, res) => {
+  res.render("admin/products/create");
 };

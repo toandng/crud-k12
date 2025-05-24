@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Comment | Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="/assets/css/common.css" />
+
+</head>
+
+<body>
+    <div class="app-container">
+        <main class="content-wrapper">
+            <div class="content-header">
+                <h1>Edit Comment</h1>
+                <a href="comment-detail.html?id=1" class="btn btn-secondary" id="backButton">
+                    <i class="fas fa-arrow-left"></i> Back
+                </a>
+            </div>
+
+            <!-- Success Message -->
+            <div id="successMessage" class="message message-success" style="display: none">
+                <i class="fas fa-check-circle"></i>
+                <span data-message-text>Comment has been updated successfully.</span>
+            </div>
+
+            <!-- Edit Form for Comments -->
+            <form id="commentForm" class="card">
+                <div class="card-header">
+                    <h3>Comment Information</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-section">
+                        <h3>Basic Information</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="commentAuthor">Author*</label>
+                                <input type="text" id="commentAuthor" name="commentAuthor" class="form-control" required
+                                    value="Sarah Johnson" />
+                                <span class="error-text" id="commentAuthorError"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="commentEmail">Email*</label>
+                                <input type="email" id="commentEmail" name="commentEmail" class="form-control" required
+                                    value="sarah.johnson@example.com" />
+                                <span class="error-text" id="commentEmailError"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="commentStatus">Status*</label>
+                                <select id="commentStatus" name="commentStatus" class="form-control" required>
+                                    <option value="">Select Status</option>
+                                    <option value="approved" selected>
+                                        Approved
+                                    </option>
+                                    <option value="pending">Pending</option>
+                                    <option value="rejected">
+                                        Rejected
+                                    </option>
+                                </select>
+                                <span class="error-text" id="commentStatusError"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="commentDate">Date*</label>
+                                <input type="datetime-local" id="commentDate" name="commentDate" class="form-control"
+                                    required value="2023-07-16T14:30" />
+                                <span class="error-text" id="commentDateError"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="commentPost">Related Post*</label>
+                            <select id="commentPost" name="commentPost" class="form-control" required>
+                                <option value="">Select Post</option>
+                                <option value="1" selected>
+                                    10 Tips for Better Productivity
+                                </option>
+                                <option value="2">
+                                    The Future of AI in Business
+                                </option>
+                                <option value="3">
+                                    5 Morning Habits of Successful People
+                                </option>
+                                <option value="4">
+                                    How to Build a Successful E-commerce
+                                    Business
+                                </option>
+                                <option value="5">
+                                    The Complete Guide to Digital Marketing
+                                </option>
+                                <option value="6">
+                                    The Rise of Remote Work
+                                </option>
+                            </select>
+                            <span class="error-text" id="commentPostError"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Comment Content</h3>
+                        <div class="form-group">
+                            <label for="commentContent">Content*</label>
+                            <textarea id="commentContent" name="commentContent" class="form-control" rows="6" required>
+Great article! These tips have really helped me improve my productivity.</textarea>
+                            <span class="error-text" id="commentContentError"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Additional Information</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="commentIp">IP Address</label>
+                                <input type="text" id="commentIp" name="commentIp" class="form-control" readonly
+                                    value="192.168.1.100" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="commentUserAgent">User Agent</label>
+                                <input type="text" id="commentUserAgent" name="commentUserAgent" class="form-control"
+                                    readonly value="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Moderation</h3>
+                        <div class="form-group">
+                            <label for="commentModNotes">Moderation Notes</label>
+                            <textarea id="commentModNotes" name="commentModNotes" class="form-control" rows="3">
+Legitimate comment, approved immediately.</textarea>
+                            <span class="error-text" id="commentModNotesError"></span>
+                            <small class="form-text text-muted">These notes are only visible to
+                                administrators and will not be shown
+                                publicly.</small>
+                        </div>
+                    </div>
+
+                    <div class="form-buttons">
+                        <button type="button" class="btn btn-secondary" id="cancelBtn">
+                            Cancel
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Save Changes
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </main>
+    </div>
+
+    <script src="assets/js/common.js"></script>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Get comment ID from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const commentId = urlParams.get("id");
+
+            // Update back button URL
+            document.getElementById(
+                "backButton"
+            ).href = `comment-detail.html?id=${commentId}`;
+
+            // Initialize form validation
+            initFormValidation("commentForm");
+
+            // Handle form submission
+            document
+                .getElementById("commentForm")
+                .addEventListener("submit", function (event) {
+                    event.preventDefault();
+
+                    if (validateForm("commentForm")) {
+                        // Gather form data
+                        const formData = {
+                            author: document.getElementById("commentAuthor")
+                                .value,
+                            email: document.getElementById("commentEmail")
+                                .value,
+                            status: document.getElementById("commentStatus")
+                                .value,
+                            date: document.getElementById("commentDate")
+                                .value,
+                            post: document.getElementById("commentPost")
+                                .value,
+                            content:
+                                document.getElementById("commentContent")
+                                    .value,
+                            modNotes:
+                                document.getElementById("commentModNotes")
+                                    .value,
+                        };
+
+                        // In a real app, this would be an API call
+                        console.log(
+                            `Updating comment ID ${commentId}:`,
+                            formData
+                        );
+
+                        // Show success message
+                        showMessage(
+                            "successMessage",
+                            "Comment has been updated successfully.",
+                            3000
+                        );
+
+                        // Redirect after a delay
+                        setTimeout(() => {
+                            window.location.href = `comment-detail.html?id=${commentId}`;
+                        }, 2000);
+                    }
+                });
+
+            // Handle cancel button
+            document
+                .getElementById("cancelBtn")
+                .addEventListener("click", function () {
+                    window.location.href = `comment-detail.html?id=${commentId}`;
+                });
+
+            // Load different mock data based on comment ID
+            loadCommentData(commentId);
+        });
+
+        // Load comment data
+        function loadCommentData(commentId) {
+            // Mock data for different comment IDs
+            let commentData;
+
+            switch (commentId) {
+                case "2":
+                    // Update form fields for comment ID 2
+                    document.getElementById("commentAuthor").value =
+                        "Michael Brown";
+                    document.getElementById("commentEmail").value =
+                        "michael.brown@example.com";
+                    document.getElementById("commentStatus").value =
+                        "approved";
+                    document.getElementById("commentDate").value =
+                        "2023-07-17T10:15";
+                    document.getElementById("commentPost").value = "1";
+                    document.getElementById("commentContent").value =
+                        "I disagree with point #3. In my experience, starting with the most difficult task first is more effective.";
+                    document.getElementById("commentIp").value =
+                        "192.168.1.102";
+                    document.getElementById("commentUserAgent").value =
+                        "Mozilla/5.0 (Windows NT 10.0; Win64; x64)";
+                    document.getElementById("commentModNotes").value =
+                        "Dissenting opinion but respectful. Approved.";
+                    break;
+
+                case "4":
+                    // Update form fields for comment ID 4
+                    document.getElementById("commentAuthor").value =
+                        "Unknown User";
+                    document.getElementById("commentEmail").value =
+                        "spam@example.com";
+                    document.getElementById("commentStatus").value =
+                        "rejected";
+                    document.getElementById("commentDate").value =
+                        "2023-07-18T09:15";
+                    document.getElementById("commentPost").value = "1";
+                    document.getElementById("commentContent").value =
+                        "Check out my website at http://spamlink.com for more productivity hacks!";
+                    document.getElementById("commentIp").value =
+                        "192.168.1.104";
+                    document.getElementById("commentUserAgent").value =
+                        "Mozilla/5.0 (Linux; Android 10)";
+                    document.getElementById("commentModNotes").value =
+                        "Spam comment with external link. Rejected.";
+                    break;
+
+                case "5":
+                    // Update form fields for comment ID 5
+                    document.getElementById("commentAuthor").value =
+                        "Jennifer Lopez";
+                    document.getElementById("commentEmail").value =
+                        "jennifer@example.com";
+                    document.getElementById("commentStatus").value =
+                        "pending";
+                    document.getElementById("commentDate").value =
+                        "2023-07-18T10:45";
+                    document.getElementById("commentPost").value = "3";
+                    document.getElementById("commentContent").value =
+                        "Morning meditation has changed my life. I'd add that to the list of habits.";
+                    document.getElementById("commentIp").value =
+                        "192.168.1.105";
+                    document.getElementById("commentUserAgent").value =
+                        "Mozilla/5.0 (iPhone; CPU iPhone OS 15_0)";
+                    document.getElementById("commentModNotes").value =
+                        "First-time commenter - awaiting moderation review.";
+                    break;
+
+                default:
+                    // Default is already set in HTML (Comment ID 1)
+                    break;
+            }
+        }
+    </script>
+
+    <style>
+        /* Additional styles for the edit comment page */
+        .form-section {
+            margin-bottom: 30px;
+        }
+
+        .form-section h3 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        /* Read-only fields styling */
+        input[readonly] {
+            background-color: #f8f8f8;
+            border-color: #e0e0e0;
+            cursor: not-allowed;
+        }
+    </style>
+</body>
+
+</html>

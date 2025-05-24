@@ -12,13 +12,9 @@ exports.index = async (req, res) => {
   });
 };
 exports.show = async (req, res) => {
-  const id = req.params.id;
-  const post = await postsService.getPostById(id);
+  res.render("admin/users/show");
+};
 
-  if (!post) throwError(404);
-
-  res.render("admin/users/show", {
-    title: post.title,
-    post,
-  });
+exports.create = async (req, res) => {
+  res.render("admin/users/create");
 };
