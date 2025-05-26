@@ -4,7 +4,7 @@ const throwError = require("@/utils/throwError");
 exports.index = async (req, res) => {
   const { page = 1, limit = 10 } = req.query;
 
-  const { items } = await postsService.getAllPosts(page, limit);
+  const { items } = await postsService.getAll(page, limit);
   console.log(items);
   res.render("admin/posts/index", {
     title: "Posts list",
@@ -20,5 +20,13 @@ exports.edit = async (req, res) => {
 };
 
 exports.create = async (req, res) => {
-  res.render("admin/posts/createPost");
+  res.render("admin/posts/createPost", { old: {}, errors: {} });
+};
+
+exports.store = async (req, res) => {
+  const { ...body } = req.body;
+
+  console.log(body);
+  await postsService.create(body);
+  res.redirect("/admin/posts");
 };

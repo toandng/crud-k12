@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit User | Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="/assets/css/common.css" />
+</head>
+
+<body>
+    <div class="app-container">
+        <% console.log(111) %>
+
+
+        <!-- Main Content -->
+        <main class="content-wrapper">
+            <div class="content-header">
+                <h1>Edit User</h1>
+                <div>
+                    <a href="/admin/users" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to Users
+                    </a>
+                    <form action="/admin/users/<%= user.id %>?_method=DELETE"
+                                        method="POST"
+                                        class="delete-form"
+                                        style="display: inline">
+                                        <button type="button" class="action-btn delete delete-btn" data-name="<%= user.name %>">
+                                            <i class="fas fa-trash"></i>Delete</button>
+                                       </form>
+                </div>
+            </div>
+
+            <!-- Success Message -->
+            <div id="successMessage" class="message message-success" style="display: none">
+                <i class="fas fa-check-circle"></i>
+                <span data-message-text>User has been updated successfully.</span>
+            </div>
+
+            <!-- Edit User Form -->
+            <form id="editUserForm" class="card" method="POST" action="/admin/users/<%= user.id %>?_method=PUT">
+
+                <div class="card-header">
+                    <h3>User Information</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-section">
+                        <h3>Personal Information</h3>
+                        <div class="form-group">
+                            <label for="userName">Full Name*</label>
+                            <input type="text" value="<% old?.name %>" id="userName" name="userName" class="form-control" required
+                                data-validate="name" />
+                                <% if(errors?.name) { %> 
+                             <span class="error-text" id="userNameError"><%errors?.name %></span>
+
+                                    <% }%>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="userEmail">Email*</label>
+                                <input type="email" id="userEmail" name="userEmail" class="form-control" required />
+                                <span class="error-text" id="userEmailError"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="userPhone">Phone</label>
+                                <input type="tel" id="userPhone" name="userPhone" class="form-control"
+                                    data-validate="phone" />
+                                <span class="error-text" id="userPhoneError"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="userAddress">Address</label>
+                            <textarea id="userAddress" name="userAddress" class="form-control" rows="2"></textarea>
+                            <span class="error-text" id="userAddressError"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Account Information</h3>
+                        <div class="form-group">
+                            <label for="userUsername">Username*</label>
+                            <input type="text" id="userUsername" name="userUsername" class="form-control" required
+                                data-validate="username" />
+                            <span class="error-text" id="userUsernameError"></span>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="userRole">Role*</label>
+                                <select id="userRole" name="userRole" class="form-control" required>
+                                    <option value="">Select Role</option>
+                                    <option value="admin">
+                                        Administrator
+                                    </option>
+                                    <option value="editor">Editor</option>
+                                    <option value="viewer">Viewer</option>
+                                </select>
+                                <span class="error-text" id="userRoleError"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="userStatus">Status*</label>
+                                <select id="userStatus" name="userStatus" class="form-control" required>
+                                    <option value="">Select Status</option>
+                                    <option value="active">Active</option>
+                                    <option value="inactive">
+                                        Inactive
+                                    </option>
+                                    <option value="pending">Pending</option>
+                                </select>
+                                <span class="error-text" id="userStatusError"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="dateCreated">Date Created</label>
+                            <input type="text" id="dateCreated" class="form-control" readonly disabled />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lastLogin">Last Login</label>
+                            <input type="text" id="lastLogin" class="form-control" readonly disabled />
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Change Password</h3>
+                        <p class="form-help-text">
+                            Leave blank to keep the current password
+                        </p>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="userPassword">New Password</label>
+                                <input type="password" id="userPassword" name="userPassword" class="form-control"
+                                    data-validate="password" />
+                                <span class="error-text" id="userPasswordError"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="userConfirmPassword">Confirm New Password</label>
+                                <input type="password" id="userConfirmPassword" name="userConfirmPassword"
+                                    class="form-control" />
+                                <span class="error-text" id="userConfirmPasswordError"></span>
+                            </div>
+                        </div>
+                        <p class="form-help-text">
+                            Password must be at least 8 characters and
+                            include uppercase, lowercase, number, and
+                            special character.
+                        </p>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Email Notifications</h3>
+                        <div class="form-group">
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="emailNotifications" name="emailNotifications" checked />
+                                <label for="emailNotifications">Send email notifications to this
+                                    user</label>
+                            </div>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="adminNotifications" name="adminNotifications" />
+                                <label for="adminNotifications">Notify administrators about changes to
+                                    this user</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-buttons">
+                        <button type="button" class="btn btn-secondary" id="cancelBtn">
+                            Cancel
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Save Changes
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </main>
+    </div>
+
+    <!-- Confirm Delete Modal -->
+    <div class="modal" id="confirmDeleteModal">
+        <div class="modal-content">
+            <h3 class="modal-title">Confirm Delete</h3>
+            <div class="modal-body">
+                Are you sure you want to delete user "<span id="deleteUserName"></span>"? This action cannot be undone.
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="cancelDelete" class="btn btn-secondary" data-cancel>
+                    Cancel
+                </button>
+                <button type="button" id="confirmDelete" class="btn btn-danger" data-confirm>
+                    Delete
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const userId = urlParams.get("id");
+
+            // Initialize form validation
+            initFormValidation("editUserForm");
+
+            // Load user data into form
+            loadUserData(userData);
+
+            document.getElementById("cancelBtn").addEventListener("click", function () {
+                window.location.href = "/admin/users" + userId;
+            });
+
+            document.querySelector(".delete-btn").addEventListener("click", async function (e) {
+                // e.preventDefault();
+
+                const userName = this.dataset.name;
+                document.getElementById("deleteUserName").textContent = userName;
+
+                const result = await showConfirmDialog("confirmDeleteModal");
+
+                if (result) {
+                    this.closest("form").submit(); // Submit form DELETE
+                }
+            });
+            // Password confirm validation
+            document.getElementById("userConfirmPassword").addEventListener("blur", function () {
+                const password = document.getElementById("userPassword").value;
+                const confirmPassword = this.value;
+
+                if (password && password !== confirmPassword) {
+                    showError(this, "Passwords do not match.");
+                }
+            });
+        });
+
+        // Hardcoded from EJS server-side data
+        const userData = {
+            id: "<%= user.id %>",
+            name: "<%= user.name %>",
+            username: "<%= user.username %>",
+            email: "<%= user.email %>",
+            phone: "<%= user.phone %>",
+            address: "<%= user.address %>",
+            role: "<%= user.role %>",
+            status: "<%= user.status %>",
+            dateCreated: "<%= user.dateCreated %>",
+            lastLogin: "<%= user.lastLogin %>"
+        };
+
+        function loadUserData(user) {
+            document.getElementById("userName").value = user.name || "";
+            document.getElementById("userUsername").value = user.username || "";
+            document.getElementById("userEmail").value = user.email || "";
+            document.getElementById("userPhone").value = user.phone || "";
+            document.getElementById("userAddress").value = user.address || "";
+            document.getElementById("userRole").value = user.role || "";
+            document.getElementById("userStatus").value = user.status || "";
+            document.getElementById("dateCreated").value = formatDate(user.dateCreated);
+            document.getElementById("lastLogin").value = formatDate(user.lastLogin);
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return "";
+            const date = new Date(dateString);
+            return date.toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+            });
+        }
+    </script>
+    
+
+    <style>
+        /* Additional styling for checkbox groups */
+        .checkbox-group {
+            margin-bottom: 10px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            margin-right: 8px;
+        }
+
+        .form-help-text {
+            margin-top: 5px;
+            color: #666;
+            font-size: 13px;
+        }
+    </style>
+</body>
+
+</html>

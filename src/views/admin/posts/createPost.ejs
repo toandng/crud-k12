@@ -29,7 +29,7 @@
             </div>
 
             <!-- Create Post Form -->
-            <form id="createPostForm" class="card">
+            <form id="createPostForm" class="card" method="POST" action="/admin/posts">
                 <div class="card-header">
                     <h3>Post Information</h3>
                 </div>
@@ -38,20 +38,24 @@
                         <h3>Basic Information</h3>
                         <div class="form-group">
                             <label for="postTitle">Post Title*</label>
-                            <input type="text" id="postTitle" name="postTitle" class="form-control" required />
-                            <span class="error-text" id="postTitleError"></span>
+                            <input type="text" value="<%= old.title %>" id="postTitle" name="postTitle" class="form-control"  />
+                            <% if(errors?.title) { %>
+                                <span class="error-text" id="postTitleError"><%= errors.title  %></span>
+
+                                <% } %>
+        
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="postSlug">Slug*</label>
-                                <input type="text" id="postSlug" name="postSlug" class="form-control" required />
+                                <input type="text" id="postSlug" name="postSlug" class="form-control" />
                                 <span class="error-text" id="postSlugError"></span>
                             </div>
 
                             <div class="form-group">
                                 <label for="postAuthor">Author*</label>
-                                <select id="postAuthor" name="postAuthor" class="form-control" required>
+                                <select id="postAuthor" name="postAuthor" class="form-control" >
                                     <option value="">Select Author</option>
                                     <option value="admin" selected>
                                         Administrator
@@ -66,7 +70,7 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="postTopic">Topic*</label>
-                                <select id="postTopic" name="postTopic" class="form-control" required>
+                                <select id="postTopic" name="postTopic" class="form-control" >
                                     <option value="">Select Topic</option>
                                     <option value="productivity">
                                         Productivity
@@ -86,7 +90,7 @@
 
                             <div class="form-group">
                                 <label for="postStatus">Status*</label>
-                                <select id="postStatus" name="postStatus" class="form-control" required>
+                                <select id="postStatus" name="postStatus" class="form-control"  >
                                     <option value="">Select Status</option>
                                     <option value="published">
                                         Published
@@ -113,16 +117,19 @@
                         <h3>Post Content</h3>
                         <div class="form-group">
                             <label for="postExcerpt">Excerpt*</label>
-                            <textarea id="postExcerpt" name="postExcerpt" class="form-control" rows="2" required
+                            <textarea id="postExcerpt" name="postExcerpt" class="form-control" rows="2" 
                                 placeholder="Enter a short excerpt (summary) of your post"></textarea>
                             <span class="error-text" id="postExcerptError"></span>
                         </div>
 
                         <div class="form-group">
                             <label for="postContent">Content*</label>
-                            <textarea id="postContent" name="postContent" class="form-control" rows="10" required
+                            <textarea id="postContent" value="<%= old.content  %>" name="postContent" class="form-control" rows="10" 
                                 placeholder="Enter the main content of your post here"></textarea>
-                            <span class="error-text" id="postContentError"></span>
+                            <% if(errors?.content) { %>
+                                <span class="error-text" id="postContentError"><%= errors.content  %></span>
+                            
+                                <% } %>
                         </div>
 
                         <div class="form-group">
@@ -199,10 +206,10 @@
         </main>
     </div>
 
-    <script src="assets/js/common.js"></script>
+    <!-- <script src="assets/js/common.js"></script> -->
 
 
-    <script>
+     <script>
         document.addEventListener("DOMContentLoaded", function () {
             // Initialize form validation
             initFormValidation("createPostForm");
@@ -233,24 +240,24 @@
                 });
 
             // Show/hide scheduled date based on status selection
-            document
-                .getElementById("postStatus")
-                .addEventListener("change", function () {
-                    const scheduledDateContainer = document.getElementById(
-                        "scheduledDateContainer"
-                    );
-                    if (this.value === "scheduled") {
-                        scheduledDateContainer.style.display = "block";
-                        document.getElementById(
-                            "postScheduledDate"
-                        ).required = true;
-                    } else {
-                        scheduledDateContainer.style.display = "none";
-                        document.getElementById(
-                            "postScheduledDate"
-                        ).required = false;
-                    }
-                });
+            // document
+            //     .getElementById("postStatus")
+            //     .addEventListener("change", function () {
+            //         const scheduledDateContainer = document.getElementById(
+            //             "scheduledDateContainer"
+            //         );
+            //         if (this.value === "scheduled") {
+            //             scheduledDateContainer.style.display = "block";
+            //             document.getElementById(
+            //                 "postScheduledDate"
+            //             ). = true;
+            //         } else {
+            //             scheduledDateContainer.style.display = "none";
+            //             document.getElementById(
+            //                 "postScheduledDate"
+            //             ). = false;
+            //         }
+            //     });
 
             // Handle form submission
             document
@@ -329,9 +336,7 @@
                         );
 
                         // Redirect after a delay
-                        setTimeout(() => {
-                            window.location.href = "posts.html";
-                        }, 2000);
+                       
                     }
                 });
 

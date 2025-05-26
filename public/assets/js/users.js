@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Setup filter form
   const filterForm = document.getElementById("filterForm");
   filterForm.addEventListener("submit", function (event) {
-    event.preventDefault();
+    // event.preventDefault();
 
     if (validateForm("filterForm")) {
       // Get filter values
@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const paginationLinks = document.querySelectorAll(".pagination li a");
   paginationLinks.forEach((link) => {
     link.addEventListener("click", function (e) {
-      e.preventDefault();
+      // e.preventDefault();
 
       // Remove active class from all links
       paginationLinks.forEach((l) =>

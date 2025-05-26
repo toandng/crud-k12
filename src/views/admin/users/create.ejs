@@ -18,7 +18,7 @@
         <main class="content-wrapper">
             <div class="content-header">
                 <h1>Create New User</h1>
-                <a href="users.html" class="btn btn-secondary">
+                <a href="/admin/users" class="btn btn-secondary">
                     <i class="fas fa-arrow-left"></i> Back to Users
                 </a>
             </div>
@@ -30,7 +30,7 @@
             </div>
 
             <!-- Create User Form -->
-            <form id="createUserForm" class="card">
+            <form id="createUserForm" class="card" method="POST" action="/admin/users">
                 <div class="card-header">
                     <h3>User Information</h3>
                 </div>
@@ -39,29 +39,45 @@
                         <h3>Personal Information</h3>
                         <div class="form-group">
                             <label for="userName">Full Name*</label>
-                            <input type="text" id="userName" name="userName" class="form-control" required
+                            <input type="text" value="<%= old?.name %>" id="userName" name="name" class="form-control"
                                 data-validate="name" />
-                            <span class="error-text" id="userNameError"></span>
+                                <% if(errors?.name) { %>
+
+                                    <span class="error-text" id="userNameError"><%= errors.name %></span>
+
+                                <% } %>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="userEmail">Email*</label>
-                                <input type="email" id="userEmail" name="userEmail" class="form-control" required />
-                                <span class="error-text" id="userEmailError"></span>
+                                <input type="email" value="<%= old?.email %>" id="userEmail" name="email" class="form-control"  />
+                                <% if(errors?.email) { %>
+                                
+                                    <span class="error-text" id="userNameError">
+                                        <%= errors.email %>
+                                    </span>
+                                
+                                    <% } %>
                             </div>
 
                             <div class="form-group">
                                 <label for="userPhone">Phone</label>
-                                <input type="tel" id="userPhone" name="userPhone" class="form-control"
+                                <input type="tel" value="<%= old?.phone %>" id="userPhone" name="phone" class="form-control"
                                     data-validate="phone" />
-                                <span class="error-text" id="userPhoneError"></span>
+                                    <% if(errors?.phone) { %>
+                                    
+                                        <span class="error-text" id="userNameError">
+                                            <%= errors.phone %>
+                                        </span>
+                                    
+                                        <%} %>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="userAddress">Address</label>
-                            <textarea id="userAddress" name="userAddress" class="form-control" rows="2"></textarea>
+                            <textarea id="userAddress"  name="address" class="form-control" rows="2"></textarea>
                             <span class="error-text" id="userAddressError"></span>
                         </div>
                     </div>
@@ -70,7 +86,7 @@
                         <h3>Account Information</h3>
                         <div class="form-group">
                             <label for="userUsername">Username*</label>
-                            <input type="text" id="userUsername" name="userUsername" class="form-control" required
+                            <input type="text" value="aaa" id="userUsername" name="username" class="form-control" 
                                 data-validate="username" />
                             <span class="error-text" id="userUsernameError"></span>
                         </div>
@@ -78,7 +94,7 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="userRole">Role*</label>
-                                <select id="userRole" name="userRole" class="form-control" required>
+                                <select id="userRole" name="userRole" class="form-control" >
                                     <option value="">Select Role</option>
                                     <option value="admin">
                                         Administrator
@@ -91,7 +107,7 @@
 
                             <div class="form-group">
                                 <label for="userStatus">Status*</label>
-                                <select id="userStatus" name="userStatus" class="form-control" required>
+                                <select id="userStatus" name="status" class="form-control" >
                                     <option value="">Select Status</option>
                                     <option value="active" selected>
                                         Active
@@ -111,15 +127,15 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="userPassword">Password*</label>
-                                <input type="password" id="userPassword" name="userPassword" class="form-control"
-                                    required data-validate="password" />
+                                <input type="password" value="Toan582004@" id="userPassword" name="password" class="form-control"
+                                     data-validate="password" />
                                 <span class="error-text" id="userPasswordError"></span>
                             </div>
 
                             <div class="form-group">
                                 <label for="userConfirmPassword">Confirm Password*</label>
-                                <input type="password" id="userConfirmPassword" name="userConfirmPassword"
-                                    class="form-control" required />
+                                <input type="password" value="Toan582004@" id="userConfirmPassword" name="comfirm_password"
+                                    class="form-control"  />
                                 <span class="error-text" id="userConfirmPasswordError"></span>
                             </div>
                         </div>
@@ -134,7 +150,7 @@
                         </p>
                     </div>
 
-                    <div class="form-section">
+                    <!-- <div class="form-section">
                         <h3>Notification Settings</h3>
                         <div class="form-group">
                             <div class="checkbox-group">
@@ -147,7 +163,7 @@
                                     user</label>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="form-buttons">
                         <button type="button" class="btn btn-secondary" id="cancelBtn">
@@ -162,10 +178,10 @@
         </main>
     </div>
 
-    <script src="assets/js/common.js"></script>
+    <!-- <script src="assets/js/common.js"></script> -->
 
 
-    <script>
+    <!-- <script>
         document.addEventListener("DOMContentLoaded", function () {
             // Initialize form validation
             initFormValidation("createUserForm");
@@ -174,7 +190,7 @@
             document
                 .getElementById("createUserForm")
                 .addEventListener("submit", function (event) {
-                    event.preventDefault();
+                    // event.preventDefault();
 
                     if (validateForm("createUserForm")) {
                         // Check if password and confirm password match
@@ -213,14 +229,11 @@
                             role: document.getElementById("userRole").value,
                             status: document.getElementById("userStatus")
                                 .value,
-                            sendEmail:
-                                document.getElementById(
-                                    "emailNotifications"
-                                ).checked,
-                            notifyAdmin:
-                                document.getElementById(
-                                    "adminNotifications"
-                                ).checked,
+                            // sendEmail:
+                            //     document.getElementById(
+                            //         "emailNotifications"
+                            //     ).checked,
+                         
                         };
 
                         console.log("Form data:", formData);
@@ -239,14 +252,6 @@
                     }
                 });
 
-            // Handle cancel button
-            document
-                .getElementById("cancelBtn")
-                .addEventListener("click", function () {
-                    window.location.href = "users.html";
-                });
-
-            // Custom validation for password confirmation
             document
                 .getElementById("userConfirmPassword")
                 .addEventListener("blur", function () {
@@ -259,7 +264,7 @@
                     }
                 });
         });
-    </script>
+    </script> -->
 
     <style>
         /* Additional styling for checkbox groups */
