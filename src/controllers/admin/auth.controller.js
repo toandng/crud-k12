@@ -11,7 +11,8 @@ exports.showRegisterForm = async (req, res) => {
 
 exports.register = async (req, res) => {
   await usersService.create({
-    name: req.body.name,
+    first_name: req.body.first_name,
+    last_name: req.body.last_name,
     email: req.body.email,
     password: md5(req.body.password),
   });
