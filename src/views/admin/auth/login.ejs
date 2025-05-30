@@ -29,16 +29,16 @@
             <h1>Admin Dashboard</h1>
         </div>
 
-        <form id="loginForm" novalidate>
+        <form id="loginForm"  method="POST" action="/admin/login">
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" id="email" class="form-control" placeholder="Enter your email" required />
+                <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required />
                 <span class="error-text" id="emailError">Please enter a valid email address.</span>
             </div>
 
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" class="form-control" placeholder="Enter your password" required />
+                <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required />
                 <span class="error-text" id="passwordError">Please enter your password.</span>
             </div>
 
@@ -71,27 +71,6 @@
     </div>
 
     <script src="/assets/js/validation.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Initialize form validation
-            if (typeof initFormValidation === "function") {
-                initFormValidation("loginForm");
-            }
-
-            // Handle form submission
-            document
-                .getElementById("loginForm")
-                .addEventListener("submit", function (event) {
-                    event.preventDefault();
-
-                    if (validateForm("loginForm")) {
-                        // In a real app, you would send an AJAX request to your server
-                        // For demo: redirect to dashboard
-                        window.location.href = "index.html";
-                    }
-                });
-        });
-    </script>
 </body>
 
 </html>

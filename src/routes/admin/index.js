@@ -8,19 +8,19 @@ const commentRouter = require("./comments");
 const userRouter = require("./users");
 const analyticRouter = require("./analytics");
 const settingRouter = require("./setting");
-const loginRouter = require("./showLoginForm");
-const registerRouter = require("./showRegisterForm");
 const forgotRouter = require("./forgotPassword");
 const accountRouter = require("./accountSetting");
+const authRouter = require("./auth");
 
 const router = express.Router();
 
 router.use("/", dashboarhRouter);
-router.use("/login", loginRouter);
 
-router.use("/register", registerRouter);
-router.use("/forgot-password", forgotRouter);
-router.use("/accountSetting", accountRouter);
+// router.use("/forgot-password", forgotRouter);
+// router.use("/accountSetting", accountRouter);
+
+// auth
+router.use("/", authRouter);
 
 router.use("/posts", postsRouter);
 router.use("/categories", categorieRouter);

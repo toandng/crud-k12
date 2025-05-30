@@ -7,6 +7,8 @@
     <title>Register | Admin Dashboard</title>
     <link rel="stylesheet" href="/assets/css/main.css" />
     <link rel="stylesheet" href="/assets/css/register.css" />
+    <link rel="stylesheet" href="/assets/css/common.css" />
+
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
@@ -63,8 +65,8 @@
             <h1>Admin Dashboard</h1>
         </div>
 
-        <form id="registerForm" novalidate>
-            <div class="form-row">
+        <form id="registerForm" novalidate method="POST" action="/admin/register">
+            <!-- <div class="form-row">
                 <div class="form-group">
                     <label for="firstname">First Name</label>
                     <input type="text" id="firstname" class="form-control" placeholder="Enter first name"
@@ -78,20 +80,26 @@
                         data-validate="name" required />
                     <span class="error-text" id="lastnameError">Please enter a valid last name.</span>
                 </div>
+            </div> -->
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" class="form-control" placeholder="Enter Name" required />
+                <span class="error-text" id="nameError">Please enter a valid name.</span>
             </div>
+            
 
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" id="email" class="form-control" placeholder="Enter your email" required />
+                <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required />
                 <span class="error-text" id="emailError">Please enter a valid email address.</span>
             </div>
 
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" class="form-control" placeholder="Choose a password"
+                <input type="password" id="password" name="password" class="form-control" placeholder="Choose a password"
                     data-validate="password" required />
                 <span class="error-text" id="passwordError">Password must meet the requirements below.</span>
-                <div class="password-requirements">
+                <!-- <div class="password-requirements">
                     <h4>Password Requirements:</h4>
                     <div class="requirement" id="lengthReq">
                         <i class="fas fa-circle"></i> At least 8 characters
@@ -111,23 +119,23 @@
                         <i class="fas fa-circle"></i> At least one special
                         character
                     </div>
-                </div>
+                </div> -->
             </div>
 
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="confirmPassword">Confirm Password</label>
-                <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm password"
+                <input type="password" id="confirmPassword"  name="confirm_password" class="form-control" placeholder="Confirm password"
                     required />
                 <span class="error-text" id="confirmPasswordError">Passwords do not match.</span>
-            </div>
-
+            </div> -->
+<!-- 
             <div class="terms">
                 <input type="checkbox" id="terms" required />
                 <label for="terms">I agree to the Terms of Service and Privacy
                     Policy</label>
                 <span class="error-text" id="termsError" style="display: block; margin-left: 20px">You must agree to the
                     terms to continue.</span>
-            </div>
+            </div> -->
 
             <button type="submit" class="btn">Create Account</button>
 
@@ -139,7 +147,7 @@
         </form>
     </div>
 
-    <script src="/assets/js/validation.js"></script>
+    <!-- <script src="/assets/js/validation.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             // Initialize form validation
@@ -287,7 +295,7 @@
                 );
             }
         });
-    </script>
+    </script> -->
 </body>
 
 </html>

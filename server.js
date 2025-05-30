@@ -3,6 +3,7 @@ const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
 
 const methodOverride = require("method-override");
+const cookieParser = require("cookie-parser");
 
 const cors = require("cors");
 const router = require("./src/routes/api");
@@ -11,11 +12,15 @@ const adminRouter = require("./src/routes/admin");
 const notFoudHandler = require("./src/middlewares/notFoundHandler");
 const errorHandler = require("./src/middlewares/errorHandler");
 const handleSidebar = require("@/middlewares/admin/handleSidebar");
+// const handleSession = require("@/middlewares/admin/handleSession");
+const Session = require("@/middlewares/admin/session");
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+app.use(cookieParser());
 
 // cau hình router đến public
 app.use(express.static("public"));
@@ -30,7 +35,7 @@ app.set("layout", "admin/layouts/default");
 // Hỗ trợ từ query hoặc input hidden
 app.use(methodOverride("_method"));
 
-app.use("/admin", handleSidebar, adminRouter);
+app.use("/admin", Session, handleSidebar, adminRouter);
 app.use("/api/v1", router);
 
 app.use(notFoudHandler);

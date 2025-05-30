@@ -3,11 +3,12 @@ const throwError = require("@/utils/throwError");
 
 exports.index = async (req, res) => {
   const users = await usersService.getAll();
+  // console.log(req.sessions.get("hihi"));
+
   res.render("admin/users/index", {
     title: "Posts list",
     users,
   });
-  console.log(users);
 };
 exports.show = async (req, res) => {
   const user = await usersService.getById(req.params.id);
@@ -32,12 +33,9 @@ exports.edit = async (req, res) => {
 };
 
 exports.update = async (req, res) => {
-  try {
-    const updatedUser = await usersService.update(req.params.id, req.body);
-    res.redirect("/admin/users");
-  } catch (err) {
-    res.status(500).send("Update failed");
-  }
+  const { comfirm_password, ...body } = req.body;
+  await usersService.update(req.params.id, body);
+  res.redirect(`/admin/users/${req.params.id}/edit`);
 };
 
 exports.store = async (req, res) => {

@@ -11,6 +11,14 @@ exports.findById = async (id) => {
   return user.length ? user[0] : null;
 };
 
+exports.findByEmailandPassword = async (email, password) => {
+  const [user] = await db.query(
+    `SELECT * FROM users WHERE email = ? AND password = ?`,
+    [email, password]
+  );
+  return user.length ? user[0] : null;
+};
+
 exports.create = async (data) => {
   const { columns, placeholders, values } = buildInsertQuery(data);
 
