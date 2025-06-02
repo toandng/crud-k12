@@ -1,6 +1,9 @@
 <aside class="sidebar">
     <div class="sidebar-logo">
         <h1>Admin Dashboard</h1>
+        <% if(auth)  { %>
+            <p>Hi, <%= auth.first_name %></p>
+            <% } %>
     </div>
 
     <nav class="sidebar-menu">
@@ -19,10 +22,12 @@
                 <i class="fas fa-user-cog"></i>
                 Account Setting
             </a>
-            <a href="" class="dropdown-item">
-                <i class="fas fa-sign-out-alt"></i>
-                Logout
-            </a>
+            <form method="POST"  action="/admin/logout?_method=DELETE">
+                <button type="submit" class="dropdown-item">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                    </button>
+            </form>
         </div>
 
         <!-- User Info (click để toggle dropdown) -->

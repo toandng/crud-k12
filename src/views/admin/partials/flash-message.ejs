@@ -1,0 +1,38 @@
+<style>
+    .flash_message {
+        padding: 16px 20px;
+        margin-bottom: 25px;
+        border: 1px solid #ccc;
+        background-color: #ccc;
+    }
+
+    .flash_message.success {
+        border-color: #c3e6cb;
+        background-color: #d4edda;
+    }
+
+    .flash_message.error {
+        border-color: #f5c6cb;
+        background-color: #f8d7da;
+    }
+
+    .flash_message.warning {
+        border-color: #ffeeba;
+        background-color: #fff3cd;
+    }
+</style>
+
+<% if(flash && flash.message) {%>
+    <div class="flash_message <%= flash.type %>">
+        <%= flash.message %>
+    </div>
+    <script>
+        setTimeout(() => {
+            const flash = document.querySelector(".flash_message")
+            if (flash) {
+                flash.style.display = "none"
+            }
+        }, 3000)
+    </script>
+    <% } %>
+

@@ -38,13 +38,24 @@
                     <div class="form-section">
                         <h3>Personal Information</h3>
                         <div class="form-group">
-                            <label for="userName">Full Name*</label>
-                            <input type="text" value="<%= old?.name %>" id="userName" name="name" class="form-control"
-                                data-validate="name" />
-                                <% if(errors?.name) { %>
+                            <label for="first_name">First Name*</label>
+                            <input type="text" value="<%= old?.first_name %>" id="first_name" name="first_name" class="form-control"
+                                data-validate="first_name" />
+                                <% if(errors?.first_name) { %>
 
-                                    <span class="error-text" id="userNameError"><%= errors.name %></span>
+                                    <span class="error-text" id="userNameError"><%= errors.first_name %></span>
 
+                                <% } %>
+                        </div>
+                        <div class="form-group">
+                            <label for="last_name">Last Name*</label>
+                            <input type="text" value="<%= old?.last_name %>" id="last_name" name="last_name" class="form-control" data-validate="last_name" />
+                            <% if(errors?.last_name) { %>
+                        
+                                <span class="error-text" id="userNameError">
+                                    <%= errors.last_name %>
+                                </span>
+                        
                                 <% } %>
                         </div>
 

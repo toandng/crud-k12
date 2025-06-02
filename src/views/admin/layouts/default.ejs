@@ -21,7 +21,11 @@
     <%- include("../partials/sidebar") %>
 
         <!-- Main Content -->
-        <main><%- body %></main>
+        <main>
+            <%- include("../partials/flash-message") %>
+            
+            <%- body %>
+        </main>
 
         <!-- Scripts -->
         <!-- COMMON FIRST -->

@@ -19,7 +19,11 @@
 
 
         <!-- Main Content -->
-        <main><%- body %></main>
+        <main>
+
+            <%- include("../partials/flash-message") %>
+            <%- body %>
+        </main>
 
      
 </body>

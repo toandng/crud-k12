@@ -5,7 +5,6 @@ exports.index = async (req, res) => {
   const { page = 1, limit = 10 } = req.query;
 
   const { items } = await postsService.getAll(page, limit);
-  console.log(items);
   res.render("admin/categories/index", {
     title: "Posts list",
     posts: items,

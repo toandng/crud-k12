@@ -1,6 +1,4 @@
-const { index } = require("@/controllers/api/post.controller");
 const { readDb, writeDb } = require("@/utils/file.utils");
-const { body } = require("express-validator");
 const RESOURCE = "comments";
 
 const getAllComments = async () => {
@@ -22,7 +20,6 @@ const getCommentByPostId = async (postId) => {
 
 const createComment = async ({ name, body }) => {
   const comments = await readDb(RESOURCE);
-  console.log(comments);
 
   const newId = (comments.at(-1)?.id ?? 0) + 1;
 
@@ -73,7 +70,6 @@ const updateComment = async (id, content) => {
 
 const deleteComment = async (id) => {
   const comments = await readDb(RESOURCE);
-  console.log(comments);
 
   const filtered = comments.filter((c) => c.id !== id);
 

@@ -14,6 +14,8 @@ const errorHandler = require("./src/middlewares/errorHandler");
 const handleSidebar = require("@/middlewares/admin/handleSidebar");
 // const handleSession = require("@/middlewares/admin/handleSession");
 const Session = require("@/middlewares/admin/session");
+const shareLocals = require("@/middlewares/admin/shareLocals");
+const checkAuth = require("@/middlewares/admin/checkAuth");
 
 const app = express();
 
@@ -35,8 +37,10 @@ app.set("layout", "admin/layouts/default");
 // Hỗ trợ từ query hoặc input hidden
 app.use(methodOverride("_method"));
 
-app.use("/admin", Session, handleSidebar, adminRouter);
 app.use("/api/v1", router);
+app.use("/admin", Session, shareLocals, checkAuth, handleSidebar);
+
+app.use("/admin", adminRouter);
 
 app.use(notFoudHandler);
 app.use(errorHandler);

@@ -3,7 +3,6 @@ const throwError = require("@/utils/throwError");
 
 exports.index = async (req, res) => {
   const users = await usersService.getAll();
-  // console.log(req.sessions.get("hihi"));
 
   res.render("admin/users/index", {
     title: "Posts list",
@@ -43,8 +42,12 @@ exports.store = async (req, res) => {
 
   const user = await usersService.create(body);
 
+  res.setFlash({
+    type: "success",
+    message: "Tạo người dùng thành công",
+  });
+
   res.redirect("/admin/users");
-  // res.json(user);
 };
 
 exports.destroy = async (req, res) => {

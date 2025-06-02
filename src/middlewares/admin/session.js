@@ -2,43 +2,53 @@ const { randomUUID } = require("node:crypto");
 const modelSession = require("@/models/session.model");
 
 async function Session(req, res, next) {
-  let id = req.cookies.id;
-  let session = id && (await modelSession.findBySid(req.cookies.id));
+  let sid = req.cookies.sid;
+  let session;
 
-  if (
-    !session ||
-    (session.expires_at && new Date(session.expires_at) < new Date())
-  ) {
-    id = randomUUID();
-    const date = new Date();
-    date.setDate(date.getDate() + 7);
-    session = await modelSession.create({
-      id,
-      expires_at: date.toISOString(),
-      data: JSON.stringify({}),
-    });
-    const isProd = (process.env.NODE_ENV = "production");
+  try {
+    session = sid && (await modelSession.findBySid(sid));
 
-    res.set(
-      "Set-Cookie",
-      `sid= ${id}; path = /, httpOnly, eprires= ${date.toISOString()}; ${
-        isProd ? "Secure" : ""
-      } Samesite = Lax`
-    );
-  }
-  const sessionData = JSON.parse(session.data ?? null) ?? {};
+    // Nếu không có session hoặc session hết hạn
+    if (
+      !session ||
+      (session.expires_at && new Date(session.expires_at) < new Date())
+    ) {
+      sid = randomUUID();
+      const date = new Date();
+      date.setDate(date.getDate() + 7);
 
-  req.session = {
-    get(key) {
-      return sessionData[key] ?? null;
-    },
-    async set(key, value) {
-      sessionData[key] = value;
-      await modelSession.update(id, {
-        data: JSON.stringify(sessionData),
+      session = await modelSession.create({
+        id: sid,
+        expires_at: date.toISOString(),
+        data: JSON.stringify({}),
       });
-    },
+
+      const isProd = process.env.NODE_ENV === "production";
+
+      res.setHeader(
+        "Set-Cookie",
+        `sid=${sid}; Path=/; HttpOnly; Expires=${date.toUTCString()}; ${
+          isProd ? "Secure;" : ""
+        } SameSite=Lax`
+      );
+    }
+  } catch (err) {
+    console.error("Lỗi khi xử lý session:", err);
+    return next(err);
+  }
+
+  req.session = session?.data ? JSON.parse(session.data) : {};
+
+  res.setFlash = (data) => {
+    if (typeof req.session !== "object") req.session = {};
+    req.session.flash = data;
   };
+
+  res.on("finish", () => {
+    modelSession.update(sid, {
+      data: JSON.stringify(req.session),
+    });
+  });
 
   next();
 }

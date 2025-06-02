@@ -1,38 +1,26 @@
 const { checkSchema } = require("express-validator");
 const handleValidationErrors = require("@/validators/admin/handlerErrors");
 
-exports.createUser = [
+exports.authLoginUser = [
   (req, res, next) => {
     res.view = "admin/users/create";
     next();
   },
   checkSchema({
-    first_name: {
-      errorMessage: "Name is not empty",
-      notEmpty: true,
-    },
-    last_name: {
-      errorMessage: "Name is not empty",
-      notEmpty: true,
-    },
     email: {
       notEmpty: {
         errorMessage: "Email is not empty",
       },
-
-      isEmail: {
-        errorMessage: "Must be an email ",
-      },
     },
-    phone: {
-      errorMessage: "Phone is not empty",
+    password: {
+      errorMessage: "Password is not empty",
       notEmpty: true,
     },
   }),
   handleValidationErrors,
 ];
 
-exports.updateUser = [
+exports.authRegisterUser = [
   checkSchema({
     first_name: {
       errorMessage: "Name is not empty",
@@ -46,13 +34,9 @@ exports.updateUser = [
       notEmpty: {
         errorMessage: "Email is not empty",
       },
-
-      isEmail: {
-        errorMessage: "Must be an email ",
-      },
     },
-    phone: {
-      errorMessage: "Phone is not empty",
+    password: {
+      errorMessage: "Password is not empty",
       notEmpty: true,
     },
   }),

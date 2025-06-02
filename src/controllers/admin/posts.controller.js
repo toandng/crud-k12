@@ -5,7 +5,6 @@ exports.index = async (req, res) => {
   const { page = 1, limit = 10 } = req.query;
 
   const { items } = await postsService.getAll(page, limit);
-  console.log(items);
   res.render("admin/posts/index", {
     title: "Posts list",
     posts: items,
@@ -26,7 +25,6 @@ exports.create = async (req, res) => {
 exports.store = async (req, res) => {
   const { ...body } = req.body;
 
-  console.log(body);
   await postsService.create(body);
   res.redirect("/admin/posts");
 };
