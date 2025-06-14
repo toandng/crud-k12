@@ -9,7 +9,7 @@ const userRouter = require("./users");
 const analyticRouter = require("./analytics");
 const settingRouter = require("./setting");
 const forgotRouter = require("./forgotPassword");
-const accountRouter = require("./accountSetting");
+const accountSettingsRouter = require("./accountSetting");
 const authRouter = require("./auth");
 
 const router = express.Router();
@@ -17,7 +17,7 @@ const router = express.Router();
 router.use("/", dashboarhRouter);
 
 // router.use("/forgot-password", forgotRouter);
-// router.use("/accountSetting", accountRouter);
+router.use("/", accountSettingsRouter);
 
 // auth
 router.use("/", authRouter);

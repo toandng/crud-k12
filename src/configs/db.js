@@ -1,10 +1,10 @@
 const mysql = require("mysql2/promise");
 
 const db = mysql.createPool({
-  host: "localhost",
-  user: "root",
-  port: 3306,
-  database: "project_scap",
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  port: process.env.DB_PORT,
+  database: process.env.DB_NAME,
   waitForConnections: true,
   connectionLimit: 10,
   maxIdle: 10,

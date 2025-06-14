@@ -1,23 +1,28 @@
 {
     "type": "commonjs",
+  
     "dependencies": {
         "@faker-js/faker": "^9.7.0",
         "bcrypt": "^6.0.0",
         "cookie-parser": "^1.4.7",
         "cors": "^2.8.5",
+        "dotenv": "^16.5.0",
         "ejs": "^3.1.10",
         "express": "^5.1.0",
         "express-ejs-layouts": "^2.5.1",
         "express-validator": "^7.2.1",
         "js-cookie": "^3.0.5",
+        "jsonwebtoken": "^9.0.2",
         "md5": "^2.3.0",
         "method-override": "^3.0.0",
         "module-alias": "^2.2.3",
         "mysql2": "^3.14.1",
+        "nodemailer": "^7.0.3",
         "slugify": "^1.6.6"
     },
     "scripts": {
-        "start": "node --watch --trace-warnings ./server.js"
+        "start": "node --watch --trace-warnings ./server.js",
+        "queue:work": "node --watch ./src/workers/queueWorker.js"
     },
     "_moduleAliases": {
         "@": "src"

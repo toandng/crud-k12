@@ -1,4 +1,5 @@
 const postService = require("@/services/posts.service");
+
 const commentsSrvice = require("@/services/comments.service");
 const postModel = require("@/models/post.model");
 const { success } = require("@/utils/response");
@@ -6,6 +7,7 @@ const throwError = require("@/utils/throwError");
 
 const index = async (req, res) => {
   const posts = await postModel.findAllPosts();
+
   return success(res, 200, posts);
 };
 

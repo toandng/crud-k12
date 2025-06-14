@@ -1,4 +1,6 @@
+const nodemailer = require("nodemailer");
 const postsService = require("@/services/posts.service");
+
 const throwError = require("@/utils/throwError");
 
 exports.index = async (req, res) => {
@@ -9,6 +11,23 @@ exports.index = async (req, res) => {
     title: "Posts list",
     posts: items,
   });
+  const transporter = nodemailer.createTransport({
+    service: process.env.MAIL_SERVICE,
+    auth: {
+      user: process.env.MAIL_AUTH_USER,
+      pass: process.envMAIL_AUTH_PASS,
+    },
+  });
+
+  const message = {
+    from: process.env.MAIL_SENDER_FROM,
+    to: "nguyenductoan2k4@gmail.com",
+    subject: "Verify ",
+    text: "Mã xác thực",
+    html: "<p><style=' color: red'></style=>Mã xác thực của bạn là</p> <img src='https://toigingiuvedep.vn/wp-content/uploads/2021/06/hinh-anh-hoat-hinh-de-thuong-cute-dang-yeu.jpg'/> ",
+  };
+  const info = await transporter.sendMail(message);
+  console.log(info);
 };
 exports.show = async (req, res) => {
   res.render("admin/posts/show");
